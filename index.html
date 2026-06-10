@@ -1,10 +1,670 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Anass - Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anass — Security & Dev Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D1117;
+      --surface:   #161B22;
+      --surface2:  #1C2333;
+      --border:    #30363D;
+      --accent:    #58A6FF;
+      --accent2:   #3FB950;
+      --text:      #E6EDF3;
+      --muted:     #8B949E;
+      --mono:      'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 40px 60px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent2);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 1px;
+      background: var(--accent2);
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .terminal-line {
+      font-family: var(--mono);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--accent);
+      margin-bottom: 28px;
+      min-height: 2em;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 36px;
+      line-height: 1.75;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0D1117;
+    }
+    .btn-primary:hover { background: #79b8ff; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SECTIONS COMMON ── */
+    section {
+      padding: 80px 40px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      margin-bottom: 40px;
+      color: var(--text);
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+    .about-text p strong { color: var(--text); }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .skill-group-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .skill-group-title .icon { font-size: 1rem; }
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .skill-name {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .skill-bar {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s ease;
+    }
+    .skill-bar-fill.green { background: var(--accent2); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .project-icon { font-size: 1.3rem; }
+    .project-badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid;
+    }
+    .badge-cyber { color: #FF7B72; border-color: #FF7B72; }
+    .badge-dev   { color: var(--accent2); border-color: var(--accent2); }
+    .badge-both  { color: var(--accent); border-color: var(--accent); }
+
+    .project-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .stack-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    .contact-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 48px;
+      text-align: center;
+    }
+    .contact-inner p {
+      color: var(--muted);
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 40px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 20px; }
+      #hero { padding: 100px 20px 60px; }
+      .about-grid, .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+      .contact-inner { padding: 32px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skill-bar-fill { transition: none; transform: scaleX(1); }
+      .cursor { animation: none; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Bienvenue sr mon portfolio</h1>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">anass<span>.</span>dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Available for opportunities</div>
+  <h1>Anass —<br>Security &amp; Dev<br>Engineer</h1>
+  <div class="terminal-line">
+    <span id="typed-text"></span><span class="cursor"></span>
+  </div>
+  <p class="hero-desc">
+    Ingénieur passionné à l'interface entre la <strong style="color:var(--text)">cybersécurité offensive</strong> et le <strong style="color:var(--text)">développement logiciel</strong>. Je conçois des systèmes robustes et j'identifie leurs failles avant les autres.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+    <a href="#contact" class="btn btn-outline">Me contacter</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// 01 — about</div>
+  <h2>Qui suis-je ?</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Ingénieur avec une double expertise en <strong>sécurité offensive</strong> (CTF, pentest, red team) et en <strong>développement full-stack</strong> (Java, Angular, cloud AWS). Je travaille sur des projets où ces deux mondes se croisent.
+      </p>
+      <p>
+        Mon approche : comprendre les systèmes en profondeur — leur architecture, leurs protocoles, et leurs vulnérabilités — pour concevoir des solutions à la fois performantes et sécurisées by design.
+      </p>
+      <div class="tags">
+        <span class="tag">Pentesting</span>
+        <span class="tag">Red Team</span>
+        <span class="tag">AWS / Cloud</span>
+        <span class="tag">Spring Boot</span>
+        <span class="tag">Angular</span>
+        <span class="tag">Docker</span>
+        <span class="tag">SIEM / Wazuh</span>
+        <span class="tag">CTF</span>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">3+</div>
+        <div class="stat-label">Années d'expérience en cybersécurité</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">20+</div>
+        <div class="stat-label">CTF & challenges résolus</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Curiosité pour les systèmes complexes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// 02 — skills</div>
+  <h2>Compétences</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="icon">🔐</span> Cybersécurité</div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name">Pentest / Red Team</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="0.85"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Analyse malware</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="0.75"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">SIEM / Wazuh / Grafana</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="0.80"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">OSINT / CTI</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="0.78"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Shellcoding / Exploit dev</span>
+          <div class="skill-bar"><div class="skill-bar-fill" data-w="0.70"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="icon">⚙️</span> Développement</div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name">Java / Spring Boot</span>
+          <div class="skill-bar"><div class="skill-bar-fill green" data-w="0.85"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Angular / TypeScript</span>
+          <div class="skill-bar"><div class="skill-bar-fill green" data-w="0.80"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">AWS / Terraform</span>
+          <div class="skill-bar"><div class="skill-bar-fill green" data-w="0.75"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Docker / Microservices</span>
+          <div class="skill-bar"><div class="skill-bar-fill green" data-w="0.82"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Rust / C / Python</span>
+          <div class="skill-bar"><div class="skill-bar-fill green" data-w="0.68"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// 03 — projects</div>
+  <h2>Projets</h2>
+  <div class="projects-grid">
+
+    <a class="project-card" href="#" target="_blank">
+      <div class="project-header">
+        <span class="project-icon">🛡️</span>
+        <span class="project-badge badge-cyber">Cyber</span>
+      </div>
+      <div class="project-name">Security Monitoring Stack</div>
+      <p class="project-desc">Infrastructure de supervision sécurité avec Wazuh SIEM, OpenSearch et Grafana. Dashboards temps réel, alerting et cartographie des agents.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Wazuh</span>
+        <span class="stack-tag">Grafana</span>
+        <span class="stack-tag">Docker</span>
+        <span class="stack-tag">AWS</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="#" target="_blank">
+      <div class="project-header">
+        <span class="project-icon">🚉</span>
+        <span class="project-badge badge-dev">Dev</span>
+      </div>
+      <div class="project-name">Speedgates Railway System</div>
+      <p class="project-desc">Système de contrôle d'accès et de validation de tickets pour portiques ferroviaires. Architecture microservices avec Spring Boot, Angular et PostgreSQL.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Spring Boot</span>
+        <span class="stack-tag">Angular</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Docker</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="#" target="_blank">
+      <div class="project-header">
+        <span class="project-icon">☁️</span>
+        <span class="project-badge badge-both">Cyber + Dev</span>
+      </div>
+      <div class="project-name">AWS Cloud Security Lab</div>
+      <p class="project-desc">Lab de sécurité cloud : déploiement IaC avec Terraform, chiffrement SOPS/KMS, exploitation SSRF → IMDS → privilege escalation IAM.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Terraform</span>
+        <span class="stack-tag">AWS IAM</span>
+        <span class="stack-tag">SOPS</span>
+        <span class="stack-tag">KMS</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="#" target="_blank">
+      <div class="project-header">
+        <span class="project-icon">🦀</span>
+        <span class="project-badge badge-cyber">Cyber</span>
+      </div>
+      <div class="project-name">BBOF Scanner</div>
+      <p class="project-desc">Outil d'analyse statique de binaires en Rust. Détection de fonctions dangereuses, résolution PLT, analyse de sections PE via goblin et capstone.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Rust</span>
+        <span class="stack-tag">goblin</span>
+        <span class="stack-tag">capstone</span>
+        <span class="stack-tag">PE/ELF</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">// 04 — contact</div>
+  <h2>Contact</h2>
+  <div class="contact-inner">
+    <p>Disponible pour des missions en cybersécurité, développement ou des collaborations sur des projets techniques ambitieux.</p>
+    <div class="contact-links">
+      <a href="mailto:anassbarriz7@gmail.com" class="btn btn-primary">✉ Email</a>
+      <a href="https://github.com/Ninja07-95" class="btn btn-outline" target="_blank">⌥ GitHub</a>
+      <a href="https://linkedin.com/anassbarriz" class="btn btn-outline" target="_blank">in LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span style="font-family:'Space Grotesk',sans-serif">anass</span> — Built with ♥ &amp; GitHub Pages — 2025
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+  // Terminal typing effect
+  const roles = [
+    'Security Engineer',
+    'Penetration Tester',
+    'Full Stack Developer',
+    'Red Teamer',
+    'CTF Player',
+  ];
+  let ri = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typed-text');
+
+  function type() {
+    const word = roles[ri];
+    if (!deleting) {
+      el.textContent = '> ' + word.slice(0, ci + 1);
+      ci++;
+      if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      el.textContent = '> ' + word.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(type, deleting ? 55 : 95);
+  }
+  type();
+
+  // Skill bar animation on scroll
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.transform = `scaleX(${e.target.dataset.w})`;
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => obs.observe(b));
+</script>
 </body>
 </html>
